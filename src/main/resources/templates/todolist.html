@@ -30,14 +30,10 @@
                         <td th:text="${todo.isUrgent()} ? '&#10004' : '&#10060'"></td>
                         <td th:text="${todo.isDone()} ? '&#10004' : '&#10060'"></td>
                         <td>
-                            <h3>
-                                <a class="label label-danger" th:href="@{'/' + ${todo.getId()} + '/delete'}">delete</a>
-                            </h3>
+                            <a class="label label-danger" th:href="@{'/' + ${todo.getId()} + '/delete'}">delete</a>
                         </td>
                         <td>
-                            <h3>
-                                <a class="label label-success" th:href="@{'/' + ${todo.getId()} + '/edit'}">edit</a>
-                            </h3>
+                            <a class="label label-success" th:href="@{'/' + ${todo.getId()} + '/edit'}">edit</a>
                         </td>
                     </tr>
                 </table>
