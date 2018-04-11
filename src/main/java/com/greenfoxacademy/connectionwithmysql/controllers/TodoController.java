@@ -15,8 +15,6 @@ public class TodoController {
 
   @GetMapping(value = {"/todo", "todo/list", "/"})
   public String list(Model model, @RequestParam(name = "isActive", required = false) boolean isActive) {
-    model.addAttribute("notCompletedSign", '&#10004');
-    model.addAttribute("completedSign", '&#10060');
     if (isActive) {
       model.addAttribute("todos", todoRepository.findAllByDone(!isActive));
     } else {
