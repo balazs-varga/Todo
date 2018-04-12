@@ -1,9 +1,7 @@
 package com.greenfoxacademy.connectionwithmysql.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Assignee {
@@ -13,6 +11,9 @@ public class Assignee {
   private long Id;
   private String name;
   private String email;
+
+  @OneToMany
+  private List<Todo> todoList;
 
   public Assignee(String name, String email) {
     this.name = name;
