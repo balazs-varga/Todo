@@ -8,9 +8,9 @@ import javax.persistence.Id;
 @Entity
 public class Assignee {
 
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Id
-  private long id;
+  private long Id;
   private String name;
   private String email;
 
@@ -23,11 +23,11 @@ public class Assignee {
   }
 
   public long getId() {
-    return id;
+    return Id;
   }
 
   public void setId(long id) {
-    this.id = id;
+    Id = id;
   }
 
   public String getName() {
