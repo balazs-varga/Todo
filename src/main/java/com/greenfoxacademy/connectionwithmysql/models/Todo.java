@@ -13,6 +13,7 @@ public class Todo {
   private boolean done;
 
   @ManyToOne
+  @JoinColumn(name = "assigneeId")
   private Assignee assignee;
 
   public Todo(String title) {
@@ -54,5 +55,13 @@ public class Todo {
 
   public void setDone(boolean done) {
     this.done = done;
+  }
+
+  public Assignee getAssignee() {
+    return assignee;
+  }
+
+  public void setAssignee(Assignee assignee) {
+    this.assignee = assignee;
   }
 }

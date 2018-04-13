@@ -1,18 +1,21 @@
 package com.greenfoxacademy.connectionwithmysql.models;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Component
 public class Assignee {
 
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Id
-  private long Id;
+  private long assigneeId;
   private String name;
   private String email;
 
-  @OneToMany
+  @OneToMany(mappedBy = "assignee")
   private List<Todo> todoList;
 
   public Assignee(String name, String email) {
@@ -23,12 +26,20 @@ public class Assignee {
   public Assignee() {
   }
 
-  public long getId() {
-    return Id;
+  public long getAssigneeId() {
+    return assigneeId;
   }
 
-  public void setId(long id) {
-    Id = id;
+  public void setAssigneeId(long assigneeId) {
+    this.assigneeId = assigneeId;
+  }
+
+  public List<Todo> getTodoList() {
+    return todoList;
+  }
+
+  public void setTodoList(List<Todo> todoList) {
+    this.todoList = todoList;
   }
 
   public String getName() {

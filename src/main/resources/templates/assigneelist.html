@@ -11,6 +11,9 @@
     <h3 class="text-center">
         <a role="button" class="btn btn-warning" th:href=@{/assignees/add}>Add new Assignee</a>
     </h3>
+    <h4 class="text-center">
+        <a role="button" class="btn btn-xs btn-info" th:href=@{/todo}>Back</a>
+    </h4>
     <br>
     <div class="container">
         <div class="row">
@@ -21,15 +24,19 @@
                         <th>Email</th>
                         <th></th>
                         <th></th>
+                        <th></th>
                     </tr>
                     <tr th:each="assignee : ${assignees}">
                         <td th:text="${assignee.name}"></td>
                         <td th:text="${assignee.email}"></td>
                         <td>
-                            <a class="label label-danger" th:href="@{'/' + 'assignees/' + ${assignee.id} + '/delete'}">delete</a>
+                            <a class="label label-danger" th:href="@{'/' + 'assignees/' + ${assignee.assigneeId} + '/delete'}">delete</a>
                         </td>
                         <td>
-                            <a class="label label-success" th:href="@{'/' + 'assignees/' + ${assignee.id} + '/edit'}">edit</a>
+                            <a class="label label-success" th:href="@{'/' + 'assignees/' + ${assignee.assigneeId} + '/edit'}">edit</a>
+                        </td>
+                        <td>
+                            <a class="label label-success" th:href="@{'/' + 'assignees/' + ${assignee.assigneeId} + '/todolist'}">List of Todos</a>
                         </td>
                     </tr>
                 </table>

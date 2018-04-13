@@ -15,9 +15,12 @@ public class AssigneeController {
 
   @Autowired
   AssigneeRepository assigneeRepository;
+  @Autowired
+  Assignee assignee;
 
   @GetMapping(value = {"/assignees/add"})
-  public String addAssigneePage() {
+  public String addAssigneePage(Model model) {
+    model.addAttribute("assignee", assignee);
     return "add_assignee";
   }
 
@@ -57,5 +60,12 @@ public class AssigneeController {
   public String updateAssignee(@ModelAttribute Assignee modifiedAssignee) {
     assigneeRepository.save(modifiedAssignee);
     return "redirect:/assignees/";
+  }
+
+  @GetMapping(value = "/assignees/{id}/todolist")
+  public String assigneeTodolistPAge(@PathVariable(name = "id") long id, Model model) {
+    model.addAttribute("assignee", assigneeRepository.findById(id).get());
+    model.addAttribute("todo", assignee.getTodoList());
+    return "assignee_todolist";
   }
 }

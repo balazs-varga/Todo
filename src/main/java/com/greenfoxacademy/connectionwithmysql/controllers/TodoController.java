@@ -1,6 +1,7 @@
 package com.greenfoxacademy.connectionwithmysql.controllers;
 
 import com.greenfoxacademy.connectionwithmysql.models.Todo;
+import com.greenfoxacademy.connectionwithmysql.repositories.AssigneeRepository;
 import com.greenfoxacademy.connectionwithmysql.repositories.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,8 @@ public class TodoController {
 
   @Autowired
   TodoRepository todoRepository;
+  @Autowired
+  AssigneeRepository assigneeRepository;
 
   @GetMapping(value = {"/todo", "todo/list", "/"})
   public String list(Model model, @RequestParam(name = "isActive", required = false) boolean isActive) {
@@ -47,6 +50,7 @@ public class TodoController {
       return "redirect:/todo/";
     } else {
       model.addAttribute("todo", todo);
+      model.addAttribute("assignee", assigneeRepository.findAll());
     }
     return "edit_todo";
   }
