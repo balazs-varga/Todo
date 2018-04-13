@@ -22,6 +22,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Number of assigned todos</th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -29,6 +30,7 @@
                     <tr th:each="assignee : ${assignees}">
                         <td th:text="${assignee.name}"></td>
                         <td th:text="${assignee.email}"></td>
+                        <td th:text="${assignee.todoList.size()}"></td>
                         <td>
                             <a class="label label-danger" th:href="@{'/' + 'assignees/' + ${assignee.assigneeId} + '/delete'}">delete</a>
                         </td>
