@@ -38,15 +38,15 @@ public class AssigneeController {
     return "assigneelist";
   }
 
-  @GetMapping(value = "/assignees/{id}/delete")
-  public String deleteAssignee(@PathVariable(name = "id") long id) {
-    assigneeService.deleteAssigneeById(id);
+  @GetMapping(value = "/assignees/{assigneeId}/delete")
+  public String deleteAssignee(@PathVariable(name = "assigneeId") long assigneeId) {
+    assigneeService.deleteAssigneeById(assigneeId);
     return "redirect:/assignees/";
   }
 
-  @GetMapping(value = "/assignees/{id}/edit")
-  public String editAssigneePage(@PathVariable(name = "id") long id, Model model) {
-    Assignee assignee = assigneeService.getAssigneeById(id).orElse(null);
+  @GetMapping(value = "/assignees/{assigneeId}/edit")
+  public String editAssigneePage(@PathVariable(name = "assigneeId") long assigneeId, Model model) {
+    Assignee assignee = assigneeService.getAssigneeById(assigneeId).orElse(null);
     if (assignee == null) {
       return "redirect:/assignees/";
     } else {
@@ -55,16 +55,16 @@ public class AssigneeController {
     return "edit_assignee";
   }
 
-  @PostMapping(value = "/assignees/{id}/edit")
+  @PostMapping(value = "/assignees/{assigneeId}/edit")
   public String updateAssignee(@ModelAttribute Assignee modifiedAssignee) {
     assigneeService.save(modifiedAssignee);
     return "redirect:/assignees/";
   }
 
-  @GetMapping(value = "/assignees/{id}/todolist")
-  public String assigneeTodolistPAge(@PathVariable(name = "id") long id, Model model) {
-    model.addAttribute("assignee", assigneeService.getAssigneeById(id).get());
-    model.addAttribute("todo", assigneeService.getAssigneeById(id).get().getTodoList());
+  @GetMapping(value = "/assignees/{assigneeId}/todolist")
+  public String assigneeTodolistPAge(@PathVariable(name = "assigneeId") long assigneeId, Model model) {
+    model.addAttribute("assignee", assigneeService.getAssigneeById(assigneeId).get());
+    model.addAttribute("todo", assigneeService.getAssigneeById(assigneeId).get().getTodoList());
     return "assignee_todolist";
   }
 }
