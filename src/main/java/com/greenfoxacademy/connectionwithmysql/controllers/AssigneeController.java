@@ -2,6 +2,7 @@ package com.greenfoxacademy.connectionwithmysql.controllers;
 
 import com.greenfoxacademy.connectionwithmysql.models.Assignee;
 import com.greenfoxacademy.connectionwithmysql.repositories.AssigneeRepository;
+import com.greenfoxacademy.connectionwithmysql.services.AssigneeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,13 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AssigneeController {
 
   @Autowired
-  AssigneeRepository assigneeRepository;
-  @Autowired
-  Assignee assignee;
+  AssigneeService assigneeService;
 
   @GetMapping(value = {"/assignees/add"})
   public String addAssigneePage(Model model) {
-    model.addAttribute("assignee", assignee);
+    model.addAttribute("assignee", new Assignee());
     return "add_assignee";
   }
 
@@ -28,26 +27,26 @@ public class AssigneeController {
   public String addAssignee(
           @ModelAttribute(name = "newAssigneeName") String newAssigneeName,
           @ModelAttribute(name = "newAssigneeEmail") String newAssigneeEmail) {
-    assigneeRepository.save(new Assignee(newAssigneeName, newAssigneeEmail));
+    assigneeService.addNewAssignee(new Assignee(newAssigneeName, newAssigneeEmail));
     return "redirect:/assignees/";
   }
 
   @GetMapping(value = "/assignees")
   public String assignees(Model model) {
-    model.addAttribute("assignees", assigneeRepository.findAll());
+    model.addAttribute("assignees", assigneeService.getAllAssignee());
     model.addAttribute("emptyList", "There is no Assignee in the list");
     return "assigneelist";
   }
 
   @GetMapping(value = "/assignees/{id}/delete")
   public String deleteAssignee(@PathVariable(name = "id") long id) {
-    assigneeRepository.deleteById(id);
+    assigneeService.deleteAssigneeById(id);
     return "redirect:/assignees/";
   }
 
   @GetMapping(value = "/assignees/{id}/edit")
   public String editAssigneePage(@PathVariable(name = "id") long id, Model model) {
-    Assignee assignee = assigneeRepository.findById(id).orElse(null);
+    Assignee assignee = assigneeService.getAssigneeById(id).orElse(null);
     if (assignee == null) {
       return "redirect:/assignees/";
     } else {
@@ -58,14 +57,14 @@ public class AssigneeController {
 
   @PostMapping(value = "/assignees/{id}/edit")
   public String updateAssignee(@ModelAttribute Assignee modifiedAssignee) {
-    assigneeRepository.save(modifiedAssignee);
+    assigneeService.save(modifiedAssignee);
     return "redirect:/assignees/";
   }
 
   @GetMapping(value = "/assignees/{id}/todolist")
   public String assigneeTodolistPAge(@PathVariable(name = "id") long id, Model model) {
-    model.addAttribute("assignee", assigneeRepository.findById(id).get());
-    model.addAttribute("todo", assignee.getTodoList());
+    model.addAttribute("assignee", assigneeService.getAssigneeById(id).get());
+    model.addAttribute("todo", assigneeService.getAssigneeById(id).get().getTodoList());
     return "assignee_todolist";
   }
 }
