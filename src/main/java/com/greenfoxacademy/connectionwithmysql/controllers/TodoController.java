@@ -1,8 +1,9 @@
 package com.greenfoxacademy.connectionwithmysql.controllers;
 
 import com.greenfoxacademy.connectionwithmysql.models.Todo;
-import com.greenfoxacademy.connectionwithmysql.repositories.AssigneeRepository;
 import com.greenfoxacademy.connectionwithmysql.repositories.TodoRepository;
+import com.greenfoxacademy.connectionwithmysql.services.AssigneeService;
+import com.greenfoxacademy.connectionwithmysql.services.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,16 +13,16 @@ import org.springframework.web.bind.annotation.*;
 public class TodoController {
 
   @Autowired
-  TodoRepository todoRepository;
+  AssigneeService assigneeService;
   @Autowired
-  AssigneeRepository assigneeRepository;
+  TodoService todoService;
 
   @GetMapping(value = {"/todo", "todo/list", "/"})
   public String list(Model model, @RequestParam(name = "isActive", required = false) boolean isActive) {
     if (isActive) {
-      model.addAttribute("todos", todoRepository.findAllByDone(!isActive));
+      model.addAttribute("todos", todoService.getAllTodoByDone(!isActive));
     } else {
-      model.addAttribute("todos", todoRepository.findAllByOrderByIdAsc());
+      model.addAttribute("todos", todoService.getAllTodoByIdAsc());
     }
     return "todolist";
   }
@@ -33,37 +34,37 @@ public class TodoController {
 
   @PostMapping(value = {"/todo/add"})
   public String addTodo(@ModelAttribute(name = "newTodoTitle") String newTodoTitle) {
-    todoRepository.save(new Todo(newTodoTitle));
+    todoService.saveTodo(new Todo(newTodoTitle));
     return "redirect:/todo/";
   }
 
   @GetMapping(value = {"/{id}/delete"})
   public String deleteTodo(@PathVariable(name = "id") long id) {
-    todoRepository.deleteById(id);
+    todoService.deleteTodoById(id);
     return "redirect:/todo/";
   }
 
   @GetMapping(value = "/{id}/edit")
   public String editPage(@PathVariable(name = "id") long id, Model model) {
-    Todo todo = todoRepository.findById(id).orElse(null);
+    Todo todo = todoService.getTodoById(id).orElse(null);
     if (todo == null) {
       return "redirect:/todo/";
     } else {
       model.addAttribute("todo", todo);
-      model.addAttribute("assignee", assigneeRepository.findAll());
+      model.addAttribute("assignee", assigneeService.getAllAssignee());
     }
     return "edit_todo";
   }
 
   @PostMapping(value = "/{id}/edit")
   public String updateTodo(@ModelAttribute Todo modifiedTodo) {
-    todoRepository.save(modifiedTodo);
+    todoService.saveTodo(modifiedTodo);
     return "redirect:/todo/";
   }
 
   @PostMapping(value = "/todo/search")
   public String filteredTodo(@ModelAttribute(name = "searchContent") String searchContent, Model model) {
-    model.addAttribute("todos", todoRepository.findSearchedTitle(searchContent));
+    model.addAttribute("todos", todoService.searchTodo(searchContent));
     return "todolist";
   }
 }
