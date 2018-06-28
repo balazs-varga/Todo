@@ -1,7 +1,6 @@
 package com.greenfoxacademy.connectionwithmysql.controllers;
 
 import com.greenfoxacademy.connectionwithmysql.models.Assignee;
-import com.greenfoxacademy.connectionwithmysql.repositories.AssigneeRepository;
 import com.greenfoxacademy.connectionwithmysql.services.AssigneeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
