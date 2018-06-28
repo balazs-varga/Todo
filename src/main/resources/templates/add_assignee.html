@@ -4,7 +4,7 @@
     <title>Create New Assignee</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/style.css}"/>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
 </head>
 <body class="text-center">
     <h1 th:text="'Add new Assignee'"></h1>
@@ -19,7 +19,7 @@
         <br>
         <input role="button" class="btn btn-sm btn-success" type="submit" value="Submit"/>
         <h4>
-            <a role="button" class="btn btn-xs btn-info" th:href=@{/assignees}>Back</a>
+            <a role="button" class="btn btn-xs btn-info" th:href="@{/assignees}">Back</a>
         </h4>
 </form>
 <script src="webjars/jquery/1.11.1/jquery.min.js"></script>
